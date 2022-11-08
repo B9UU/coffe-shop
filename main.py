@@ -90,6 +90,7 @@ def register():
             )
             db.session.add(use)
             db.session.commit()
+            login_user(user)
             return redirect(url_for('home'))
         else:
             flash('email all ready has an account try to login or register with another email')

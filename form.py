@@ -18,8 +18,8 @@ class RegisterForm(FlaskForm):
 
 class AddCafe(FlaskForm):
     name = StringField("Name", validators=[DataRequired()])
-    map_url = URLField('Map Url', validators=[DataRequired()])
-    img_url = URLField('Image Url', validators=[DataRequired()])
+    map_url = StringField('Map Url', validators=[DataRequired()])
+    img_url = StringField('Image Url', validators=[DataRequired()])
     location = StringField("location", validators=[DataRequired()])
     has_sockets = SelectField('Sockets Number',choices=[(True, 'Yes'), (False, 'No')],validators=[InputRequired()])
     has_toilet = SelectField('Has Toilet',choices=[(True, 'Yes'), (False, 'No')],validators=[InputRequired()])

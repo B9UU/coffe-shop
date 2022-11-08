@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from form import LoginForm, RegisterForm,AddCafe
 from flask_login import LoginManager,login_user,current_user,UserMixin,logout_user,login_required
+import os
 
 login_manager = LoginManager()
 #ini flask app and database
@@ -12,8 +13,12 @@ app.app_context().push()
 db = SQLAlchemy()
 Bootstrap(app)
 # configure the SQLite database, relative to the app instance folder
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///cafes.db"
-app.config['SECRET_KEY'] = 'a9GnlXKq3hjOhuL_beTUvQ'
+##CONNECT TO DB
+uri = os.environ.get("DATABASE_URL")  # or other relevant config var
+if uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
+app.config["SQLALCHEMY_DATABASE_URI"] = uri
+app.config['SECRET_KEY'] = os.environ.get('SECRET')
 # initialize the app with the extension
 db.init_app(app)
 login_manager.init_app(app)
@@ -129,5 +134,7 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
+# if __name__ == '__main__':
+#     app.run(debug=True)
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000)

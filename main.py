@@ -17,6 +17,7 @@ Bootstrap(app)
 uri = os.environ.get("DATABASE_URL")  # or other relevant config var
 if uri.startswith("postgres://"):
     uri = uri.replace("postgres://", "postgresql://", 1)
+
 app.config["SQLALCHEMY_DATABASE_URI"] = uri
 app.config['SECRET_KEY'] = os.environ.get('SECRET')
 # initialize the app with the extension
@@ -39,7 +40,7 @@ class Cafe(db.Model):
     has_wifi = db.Column(db.BOOLEAN, nullable=False)
     can_take_calls = db.Column(db.BOOLEAN, nullable=False)
     seats = db.Column(db.String(250), nullable=False)
-    coffee_price = db.Column(db.Integer, nullable=False)
+    coffee_price = db.Column(db.String(250), nullable=False)
 
 # users table 
 class Users(db.Model,UserMixin):

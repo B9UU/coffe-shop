@@ -18,7 +18,7 @@ uri = os.environ.get("DATABASE_URL")  # or other relevant config var
 if uri.startswith("postgres://"):
     uri = uri.replace("postgres://", "postgresql://", 1)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = uri
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URL', 'sqlite://cafes.db')
 app.config['SECRET_KEY'] = os.environ.get('SECRET')
 # initialize the app with the extension
 db.init_app(app)
@@ -136,7 +136,7 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
-# if __name__ == '__main__':
-#     app.run(debug=True)
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(debug=True)
+# if __name__ == '__main__':
+#     app.run(host='0.0.0.0', port=5000)
